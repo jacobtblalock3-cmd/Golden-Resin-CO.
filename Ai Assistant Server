@@ -1,0 +1,249 @@
+                         Golden Resin CO. Network
+                                   │
+                                   │
+                         Managed VLAN Switch
+                                   │
+                                   │
+                         Management VLAN
+                                   │
+                                   │
+                    ┌──────────────────────────┐
+                    │ Dell Precision Rack 7910 │
+                    │ AI Assistant Server      │
+                    └──────────────────────────┘
+                                   │
+             ┌─────────────────────┼─────────────────────┐
+             │                     │                     │
+             ▼                     ▼                     ▼
+
+
+      Compute Layer          Storage Layer          Network Layer
+
+
+┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
+│ Dual Xeon CPUs  │    │ NVMe Storage    │    │ 10Gb Networking │
+│                 │    │                 │    │                 │
+│ AI Processing   │    │ AI Models       │    │ VLAN Access     │
+│ Virtualization  │    │ Databases       │    │ Data Transfer   │
+└─────────────────┘    └─────────────────┘    └─────────────────┘
+             │                     │                     │
+             └─────────────────────┼─────────────────────┘
+                                   │
+                                   ▼
+
+                         AI Software Stack
+
+
+
+
+
+
+
+
+
+CPU Processing
+│
+├── AI Agent Logic
+├── Automation Scripts
+├── Network Analysis
+├── Documentation Generation
+├── Log Processing
+└── VM Containers
+
+
+
+
+                 PCIe Expansion
+                       │
+        ┌──────────────┼──────────────┐
+        │              │              │
+
+     Tesla P100     Tesla P100     Tesla P100
+        GPU            GPU            GPU
+
+        │              │              │
+
+        └──────────────┼──────────────┘
+                       │
+
+              CUDA AI Compute Layer
+
+
+
+
+Dell Precision Rack 7910 Storage
+
+
+       ┌──────────────────────┐
+       │ NVMe Storage Pool    │
+       │                     │
+       │ 5TB+ Fast Storage   │
+       └──────────────────────┘
+                 │
+                 │
+       ┌──────────────────────┐
+       │ AI Models            │
+       │ Containers           │
+       │ Databases            │
+       │ Virtual Machines     │
+       └──────────────────────┘
+
+
+
+       ┌──────────────────────┐
+       │ HDD Storage Pool     │
+       │ 5TB+ Capacity       │
+       └──────────────────────┘
+                 │
+                 │
+       ┌──────────────────────┐
+       │ Backups              │
+       │ Datasets             │
+       │ Logs                 │
+       │ Archives             │
+       └──────────────────────┘
+
+
+
+
+Dell Precision Rack 7910
+
+        Proxmox / Ubuntu
+              │
+
+              │
+
+       Docker Environment
+
+              │
+
+ ┌────────────┼────────────┐
+ │            │            │
+
+AI Model    Automation   Monitoring
+Server      Engine       Assistant
+
+ │            │            │
+
+LLM        Ansible       Grafana
+API        Scripts       Analysis
+
+
+
+
+
+
+                 SOC VLAN
+
+        Security Onion
+              │
+              │ Logs
+              ▼
+
+          Wazuh SIEM
+              │
+              │ Alerts
+              ▼
+
+      Dell AI Assistant Server
+
+              │
+
+        AI Analysis Engine
+
+              │
+
+       Human Administrator
+
+
+
+
+
+
+AI + Infrastructure Integration
+Dell AI Assistant
+        │
+        │ API / SSH / Automation
+        │
+        ├──────────────► Proxmox Infrastructure Node
+        │
+        ├──────────────► SOC Node
+        │
+        ├──────────────► DevOps Node
+        │
+        └──────────────► pfSense Firewall
+
+Automation examples:
+
+* Restart failed services
+* Create VM snapshots
+* Monitor resource usage
+* Generate documentation
+* Run health checks
+
+
+
+
+Security Placement
+
+The Dell Precision Rack 7910 should not sit directly inside the production VLAN.
+
+Recommended placement:
+                 VLAN 10
+             Management VLAN
+
+                   │
+
+        Dell Precision Rack 7910
+
+                   │
+
+          Controlled Access Rules
+
+                   │
+
+ ┌─────────────┬─────────────┬─────────────┐
+
+Infra VLAN    SOC VLAN     DevOps VLAN
+
+
+
+
+Complete Ecosystem:
+
+                         INTERNET
+                            │
+                            ▼
+                       pfSense Firewall
+                            │
+                            ▼
+                    Managed VLAN Switch
+                            │
+
+        ┌───────────────────┼───────────────────┐
+        │                   │                   │
+
+ Infrastructure        SOC Environment     DevOps Environment
+
+ Proxmox Node          Proxmox Node        Proxmox Node
+
+        │                   │                   │
+        └───────────────────┼───────────────────┘
+                            │
+                            ▼
+
+              Dell Precision Rack 7910
+
+              ┌─────────────────────┐
+              │ AI Assistant Engine  │
+              │ Local LLM            │
+              │ Automation           │
+              │ Analytics            │
+              │ Security Assistant  │
+              └─────────────────────┘
+
+                            │
+
+                            ▼
+
+                  MacBook Administrator
