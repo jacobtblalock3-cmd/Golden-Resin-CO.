@@ -1,0 +1,17 @@
+                 Managed VLAN Switch
+                         │
+                         │
+                         ▼
+
+              ┌─────────────────────┐
+              │ TP-Link Deco X25    │
+              │ Mesh WiFi AP System  │
+              │ (AP Mode)            │
+              └─────────────────────┘
+                         │
+        ┌────────────────┼────────────────┐
+        │                │                │
+        ▼                ▼                ▼
+
+   Corporate WiFi     IoT WiFi       Guest WiFi
+    VLAN 50           VLAN 70        VLAN 60
