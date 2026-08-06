@@ -1,0 +1,49 @@
+                              🌐 Internet
+                                  │
+                                  │
+                         ISP Modem / ONT
+                    (Spectrum Fiber Connection)
+                                  │
+                                  │
+                    ┌────────────────────────┐
+                    │ HP EliteDesk 600 G2    │
+                    │ Physical pfSense       │
+                    │ Firewall / Router      │
+                    └────────────────────────┘
+                                  │
+                                  │ VLAN Trunk
+                                  │
+                    ┌────────────────────────┐
+                    │ Managed VLAN Switch    │
+                    │ Core Network Switching │----- ( Additional devices listed under Wireless Network Topology )
+                    └────────────────────────┘
+                                  │
+        ┌─────────────────────────┼─────────────────────────┐
+        │                         │                         │
+        │                         │                         │
+        ▼                         ▼                         ▼
+
+
+┌──────────────────┐    ┌──────────────────┐    ┌──────────────────┐
+│ HP EliteDesk     │    │ HP EliteDesk     │    │ HP EliteDesk     │
+│ 800 G2 Micro     │    │ 800 G2 Micro     │    │ 800 G2 Micro     │
+│                  │    │                  │    │                  │
+│ Proxmox Node 1   │    │ Proxmox Node 2   │    │ Proxmox Node 3   │
+│ Infrastructure   │    │ SOC Environment  │    │ DevOps /         │
+│ Services         │    │ Security Tools   │    │ Monitoring       │
+└──────────────────┘    └──────────────────┘    └──────────────────┘
+        │                         │                         │
+        │                         │                         │
+        └─────────────────────────┼─────────────────────────┘
+                                  │
+                                  │
+                                  ▼
+
+                    ┌────────────────────────┐
+                    │ Dell AI Assistant      │
+                    │ Server                 │
+                    │                        │
+                    │ Local AI / Automation  │
+                    │ Network Assistant      │
+                    │ Monitoring Intelligence│
+                    └────────────────────────┘
