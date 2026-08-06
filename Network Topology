@@ -1,49 +1,70 @@
-                              🌐 Internet
-                                  │
-                                  │
-                         ISP Modem / ONT
-                    (Spectrum Fiber Connection)
-                                  │
-                                  │
-                    ┌────────────────────────┐
-                    │ HP EliteDesk 600 G2    │
-                    │ Physical pfSense       │
-                    │ Firewall / Router      │
-                    └────────────────────────┘
-                                  │
-                                  │ VLAN Trunk
-                                  │
-                    ┌────────────────────────┐
-                    │ Managed VLAN Switch    │
-                    │ Core Network Switching │----- ( Additional devices listed under Wireless Network Topology )
-                    └────────────────────────┘
-                                  │
-        ┌─────────────────────────┼─────────────────────────┐
-        │                         │                         │
-        │                         │                         │
-        ▼                         ▼                         ▼
+                         INTERNET
+                            |
+                    ISP Modem / ONT
+                            |
+                            |
+        +--------------------------------+
+        | AMD Micro PC - pfSense Firewall |
+        |                                |
+        | CPU: AMD RX-427BB              |
+        | RAM: 8GB                       |
+        | Storage: 128GB M.2 SATA        |
+        | NIC: Intel X550-T2 10GbE       |
+        |                                |
+        | Roles:                         |
+        | - Routing                      |
+        | - Firewall                     |
+        | - VLAN Management              |
+        | - DHCP                         |
+        | - DNS Resolver                 |
+        | - VPN                          |
+        +--------------------------------+
+                            |
+                            |
+                 Managed VLAN Switch
+                            |
+       +--------------------+--------------------+
+       |                    |                    |
+       |                    |                    |
++--------------+   +----------------+   +----------------+
+| HP 800 G2    |   | HP 800 G2       |   | HP 600 G2      |
+| Infrastructure|  | SOC Node        |   | DevOps /       |
+| Node          |   |                |   | Monitoring     |
++--------------+   +----------------+   +----------------+
+
+Proxmox VE       Proxmox VE          Proxmox VE
+
+VMs:             VMs:                VMs:
+- AD Server      - Wazuh             - Grafana
+- DNS            - Security Onion    - Prometheus
+- File Services  - Kali Linux        - Docker
+- Internal Apps  - Vulnerability     - Uptime Kuma
+                   Testing           - Automation
+                 - SOC Tools         - Backup Tasks
 
 
-┌──────────────────┐    ┌──────────────────┐    ┌──────────────────┐
-│ HP EliteDesk     │    │ HP EliteDesk     │    │ HP EliteDesk     │
-│ 800 G2 Micro     │    │ 800 G2 Micro     │    │ 800 G2 Micro     │
-│                  │    │                  │    │                  │
-│ Proxmox Node 1   │    │ Proxmox Node 2   │    │ Proxmox Node 3   │
-│ Infrastructure   │    │ SOC Environment  │    │ DevOps /         │
-│ Services         │    │ Security Tools   │    │ Monitoring       │
-└──────────────────┘    └──────────────────┘    └──────────────────┘
-        │                         │                         │
-        │                         │                         │
-        └─────────────────────────┼─────────────────────────┘
-                                  │
-                                  │
-                                  ▼
+                            |
+                            |
+                    Management VLAN
+                            |
+                     MacBook Admin
+                     Workstation
 
-                    ┌────────────────────────┐
-                    │ Dell AI Assistant      │
-                    │ Server                 │
-                    │                        │
-                    │ Local AI / Automation  │
-                    │ Network Assistant      │
-                    │ Monitoring Intelligence│
-                    └────────────────────────┘
+
+                            |
+                            |
+                 Separate AI Assistant Server
+                 (Dedicated Hardware)
+                            |
+        +--------------------------------+
+        | AI Operations Platform         |
+        |                                |
+        | - Local LLM Hosting            |
+        | - Network Analysis             |
+        | - Log Analysis                 |
+        | - Automation                   |
+        | - Security Assistant            |
+        | - Documentation Assistant      |
+        | - Lab Management Tools         |
+        | - GPU Compute                  |
+        +--------------------------------+
