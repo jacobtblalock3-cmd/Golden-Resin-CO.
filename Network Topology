@@ -1,74 +1,96 @@
-                         INTERNET
-                            |
-                    ISP Modem / ONT
-                            |
-                            |
-        +--------------------------------+
-        | AMD Micro PC - pfSense Firewall |
-        |                                |
-        | CPU: AMD RX-427BB              |
-        | RAM: 8GB                       |
-        | Storage: 128GB M.2 SATA        |
-        | NIC: Intel X550-T2 10GbE       |
-        |                                |
-        | Roles:                         |
-        | - Routing                      |
-        | - Firewall                     |
-        | - VLAN Management              |
-        | - DHCP                         |
-        | - DNS Resolver                 |
-        | - VPN                          |
-        +--------------------------------+
-                            |
-                            |
-                 Managed VLAN Switch
-                            |
-       +--------------------+--------------------+
-       |                    |                    |
-       |                    |                    |
-+--------------+   +----------------+   +----------------+
-| HP 800 G2    |   | HP 800 G2       |   | HP 600 G2      |
-| Infrastructure|  | SOC Node        |   | DevOps /       |
-| Node          |   |                |   | Monitoring     |
-+--------------+   +----------------+   +----------------+
+                                      ┌─────────────────┐
+                                      │    INTERNET     │
+                                      └────────┬────────┘
+                                               │
+                                      Spectrum Fiber / ISP
+                                               │
+                                      ┌────────▼────────┐
+                                      │  ISP Modem/ONT  │
+                                      │  Bridge Mode    │
+                                      └────────┬────────┘
+                                               │
+                                               ▼
+┌──────────────────────────────────────────────────────────────────────┐
+│                     DEDICATED pfSense FIREWALL                      │
+│                                                                      │
+│  AMD RX-427BB • 4-Core 2.7 GHz • 8 GB DDR3 • 128 GB SSD             │
+│  2× Intel X550-T2 10GbE • 1× Realtek 1GbE                           │
+│                                                                      │
+│  Firewall • Routing • NAT • DHCP • DNS • VPN • VLANs • IDS/IPS      │
+└────────────────────────────────┬─────────────────────────────────────┘
+                                 │
+                           10 GbE / VLAN Trunk
+                                 │
+                                 ▼
+                    ┌───────────────────────────┐
+                    │    MANAGED VLAN SWITCH   │
+                    │        CORE SWITCH       │
+                    └─────────────┬─────────────┘
+                                  │
+       ┌──────────────────────────┼──────────────────────────┐
+       │                          │                          │
+       │                          │                          │
+       ▼                          ▼                          ▼
+┌────────────────┐        ┌────────────────┐        ┌────────────────┐
+│ HP 600 G2 DM   │        │ HP 800 G2 #1   │        │ HP 800 G2 #2   │
+│                │        │                │        │                │
+│ INFRASTRUCTURE │        │      SOC       │        │ DEVOPS /       │
+│                │        │                │        │ MONITORING      │
+│ Proxmox VE     │        │ Proxmox VE     │        │ Proxmox VE     │
+└───────┬────────┘        └───────┬────────┘        └───────┬────────┘
+        │                         │                         │
+        ▼                         ▼                         ▼
+   Infrastructure             Security/SOC             DevOps/
+       VMs                       VMs                   Monitoring
+        │                         │                         │
+   ├─ Windows Server         ├─ Wazuh                 ├─ Docker
+   ├─ Active Directory       ├─ Security Onion        ├─ Portainer
+   ├─ DNS                    ├─ Kali Linux             ├─ Grafana
+   ├─ Group Policy           ├─ Nessus/OpenVAS         ├─ Prometheus
+   ├─ Certificate Services   ├─ Security Testing      ├─ Git/GitLab
+   ├─ File Services          └─ SOC Tools              ├─ Uptime Kuma
+   └─ Linux VMs                                       └─ Monitoring
+                                  │
+                                  │
+                                  ▼
+                         ┌──────────────────┐
+                         │ FUTURE AI SERVER │
+                         │                  │
+                         │ High-Performance │
+                         │ Local AI         │
+                         │                  │
+                         │ • Local LLMs     │
+                         │ • AI SOC         │
+                         │ • RAG            │
+                         │ • Automation     │
+                         │ • Log Analysis   │
+                         │ • AI APIs        │
+                         └──────────────────┘
 
-Proxmox VE       Proxmox VE          Proxmox VE
 
-VMs:             VMs:                VMs:
-- AD Server      - Wazuh             - Grafana
-- DNS            - Security Onion    - Prometheus
-- File Services  - Kali Linux        - Docker
-- Internal Apps  - Vulnerability     - Uptime Kuma
-                   Testing           - Automation
-                 - SOC Tools         - Backup Tasks
-
-
-                            |
-                            |
-                    Management VLAN
-                            |
-                     MacBook Admin
-                     Workstation
+                    MANAGED SWITCH
+                          │
+                          ▼
+                  ┌─────────────────┐
+                  │ TP-Link Deco    │
+                  │ X25             │
+                  │                 │
+                  │ AP MODE         │
+                  └────────┬────────┘
+                           │
+                  ┌────────┴────────┐
+                  │                 │
+               Wi-Fi Clients    Guest Wi-Fi
 
 
-                            |
-                            |
-                 Separate AI Assistant Server
-                 (Dedicated Hardware)
-                            |
-        +--------------------------------+
-        | AI Operations Platform         |
-        |                                |
-        | - Local LLM Hosting            |
-        | - Network Analysis             |
-        | - Log Analysis                 |
-        | - Automation                   |
-        | - Security Assistant            |
-        | - Documentation Assistant      |
-        | - Lab Management Tools         |
-        | - GPU Compute                  |
-        +--------------------------------+
-
+                     MANAGEMENT VLAN
+                           │
+                           ▼
+                     ┌──────────┐
+                     │ MacBook  │
+                     │          │
+                     │ Admin PC │
+                     └──────────┘
 
 
                          Internet
@@ -81,7 +103,7 @@ VMs:             VMs:                VMs:
           (Personal WiFi)               |
           192.168.1.x                  |
                                         |
-                                pfSense Firewall
+                                pfSense Firewall ( AMD Micro Pc )
                                 192.168.10.x
                                         |
                               Managed VLAN Switch
@@ -89,7 +111,7 @@ VMs:             VMs:                VMs:
               +-------------------------+----------------+
               |                         |                |
       Infrastructure Node          SOC Node        DevOps Node
-       HP 800 G2                   HP 800 G2       HP 800 G2
+       HP 600 G2                   HP 800 G2       HP 800 G2
 
 
 This setup allows for standard user access to internet throughout the townhouse,
