@@ -68,3 +68,32 @@ VMs:             VMs:                VMs:
         | - Lab Management Tools         |
         | - GPU Compute                  |
         +--------------------------------+
+
+
+
+                         Internet
+                            |
+                    Spectrum ONT/Modem
+                            |
+                +-----------+-----------+
+                |                       |
+          TP-Link Deco Mesh        pfSense WAN
+          (Personal WiFi)               |
+          192.168.1.x                  |
+                                        |
+                                pfSense Firewall
+                                192.168.10.x
+                                        |
+                              Managed VLAN Switch
+                                        |
+              +-------------------------+----------------+
+              |                         |                |
+      Infrastructure Node          SOC Node        DevOps Node
+       HP 800 G2                   HP 800 G2       HP 800 G2
+
+
+This setup allows for standard user access to internet throughout the townhouse,
+while isolating the Enterprise Network Simulation to be completely outside of that
+public network. Users of tbe TP Link network shouldn't have access to the enteprise 
+network with this specific setup. 
+
